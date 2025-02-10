@@ -6,6 +6,7 @@
     <title>Halloween Countdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gochi+Hand&display=swap" rel="stylesheet">
     <style>
+        /* Global reset and basic styling */
         * {
             margin: 0;
             padding: 0;
@@ -49,6 +50,7 @@
             justify-content: center;
         }
 
+        /* Styling for inputs, select, and buttons */
         input, select, button {
             padding: 0.8rem;
             border-radius: 5px;
@@ -57,6 +59,33 @@
             color: #ff6b08;
             font-family: inherit;
             font-size: 1.1rem;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Enhanced focus effect */
+        input:focus, select:focus {
+            border-color: #ff6b08;
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 107, 8, 0.5);
+        }
+
+        /* Remove spinner arrows from number input */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        /* Custom select styling: remove default arrow and add custom SVG */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: #2c0b0e url("data:image/svg+xml;utf8,<svg fill='%23ff6b08' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+            background-size: 16px;
         }
 
         button {
@@ -82,6 +111,8 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            text-align: center;
+            padding: 1rem;
         }
 
         .pumpkin-loader {
@@ -89,11 +120,39 @@
             height: 100px;
             position: relative;
             animation: float 3s ease-in-out infinite;
+            font-size: 4rem;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
+        }
+
+        /* Progress bar styling */
+        .progress-container {
+            position: relative;
+            width: 80%;
+            height: 20px;
+            border: 2px solid #ff6b08;
+            background: #2c0b0e;
+            margin: 1rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #ff6b08;
+            transition: width 1s linear;
+        }
+
+        .progress-death {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
         }
 
         @media (max-width: 480px) {
@@ -130,14 +189,23 @@
     <div class="loading-screen" id="loadingScreen">
         <div class="pumpkin-loader">🎃</div>
         <h2 id="countdownDisplay"></h2>
+        <div class="progress-container">
+            <div class="progress-death">💀</div>
+            <div class="progress-bar"></div>
+        </div>
+        <button id="stopCountdownButton" onclick="stopCountdown()">Stop Countdown</button>
     </div>
 
     <script>
+        let countdownInterval; // Global variable for the countdown interval
+        let totalSeconds = 0;  // To store the initial total seconds for progress calculation
+
         function startCountdown() {
             const timeInput = document.getElementById('timeInput');
             const timeUnit = document.getElementById('timeUnit').value;
             const loadingScreen = document.getElementById('loadingScreen');
             const countdownDisplay = document.getElementById('countdownDisplay');
+            const progressBar = document.querySelector('.progress-bar');
 
             if (!timeInput.value || timeInput.value <= 0) {
                 alert("Please enter a valid number!");
@@ -145,16 +213,24 @@
             }
 
             let seconds = convertToSeconds(timeInput.value, timeUnit);
-            
+            totalSeconds = seconds; // Save the initial time value
+
             loadingScreen.style.display = 'flex';
             document.querySelector('.container').style.display = 'none';
 
-            const countdown = setInterval(() => {
+            countdownDisplay.textContent = formatTime(seconds);
+            progressBar.style.width = '0%';
+
+            countdownInterval = setInterval(() => {
                 seconds--;
                 countdownDisplay.textContent = formatTime(seconds);
 
+                // Update the progress bar width based on elapsed time
+                let progressPercentage = ((totalSeconds - seconds) / totalSeconds) * 100;
+                progressBar.style.width = progressPercentage + '%';
+
                 if (seconds <= 0) {
-                    clearInterval(countdown);
+                    clearInterval(countdownInterval);
                     countdownDisplay.textContent = "TIME'S UP!";
                     setTimeout(() => {
                         loadingScreen.style.display = 'none';
@@ -162,6 +238,15 @@
                     }, 2000);
                 }
             }, 1000);
+        }
+
+        function stopCountdown() {
+            clearInterval(countdownInterval);
+            // Reset UI elements
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+            document.querySelector('.progress-bar').style.width = '0%';
+            document.getElementById('countdownDisplay').textContent = '';
         }
 
         function convertToSeconds(value, unit) {
