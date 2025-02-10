@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halloween Countdown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gochi+Hand&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #2c0b0e;
+            font-family: 'Gochi Hand', cursive;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff6b08;
+        }
+
+        .container {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ff6b08;
+            text-align: center;
+            max-width: 90%;
+            width: 500px;
+            margin: 1rem;
+        }
+
+        h1 {
+            font-family: 'Creepster', cursive;
+            color: #ff6b08;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .input-group {
+            margin: 1.5rem 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        input, select, button {
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 2px solid #ff6b08;
+            background: #2c0b0e;
+            color: #ff6b08;
+            font-family: inherit;
+            font-size: 1.1rem;
+        }
+
+        button {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #ff6b08;
+            color: #1a1a1a;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ff6b08;
+        }
+
+        .loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .pumpkin-loader {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            input, select, button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spooky Countdown</h1>
+        <div class="input-group">
+            <input type="number" id="timeInput" placeholder="Enter time..." min="1">
+            <select id="timeUnit">
+                <option value="seconds">Seconds</option>
+                <option value="minutes">Minutes</option>
+                <option value="hours">Hours</option>
+                <option value="days">Days</option>
+                <option value="weeks">Weeks</option>
+            </select>
+        </div>
+        <button onclick="startCountdown()">Start Countdown</button>
+    </div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="pumpkin-loader">🎃</div>
+        <h2 id="countdownDisplay"></h2>
+    </div>
+
+    <script>
+        function startCountdown() {
+            const timeInput = document.getElementById('timeInput');
+            const timeUnit = document.getElementById('timeUnit').value;
+            const loadingScreen = document.getElementById('loadingScreen');
+            const countdownDisplay = document.getElementById('countdownDisplay');
+
+            if (!timeInput.value || timeInput.value <= 0) {
+                alert("Please enter a valid number!");
+                return;
+            }
+
+            let seconds = convertToSeconds(timeInput.value, timeUnit);
+            
+            loadingScreen.style.display = 'flex';
+            document.querySelector('.container').style.display = 'none';
+
+            const countdown = setInterval(() => {
+                seconds--;
+                countdownDisplay.textContent = formatTime(seconds);
+
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    countdownDisplay.textContent = "TIME'S UP!";
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        document.querySelector('.container').style.display = 'block';
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        function convertToSeconds(value, unit) {
+            const conversions = {
+                seconds: 1,
+                minutes: 60,
+                hours: 3600,
+                days: 86400,
+                weeks: 604800
+            };
+            return value * conversions[unit];
+        }
+
+        function formatTime(seconds) {
+            const days = Math.floor(seconds / 86400);
+            seconds %= 86400;
+            const hours = Math.floor(seconds / 3600);
+            seconds %= 3600;
+            const minutes = Math.floor(seconds / 60);
+            seconds %= 60;
+            
+            return [
+                days > 0 ? `${days}d` : '',
+                hours > 0 ? `${hours}h` : '',
+                minutes > 0 ? `${minutes}m` : '',
+                `${seconds}s`
+            ].filter(Boolean).join(' ');
+        }
+    </script>
+</body>
+</html>
