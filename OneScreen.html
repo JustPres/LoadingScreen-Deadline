@@ -1,280 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halloween Countdown</title>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gochi+Hand&display=swap" rel="stylesheet">
-    <style>
-        /* Global reset and basic styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halloween Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gochi+Hand&display=swap" rel="stylesheet">
+  <style>
+    /* Global reset and basic styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background: #2c0b0e;
-            font-family: 'Gochi Hand', cursive;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ff6b08;
-        }
+    body {
+      background: #2c0b0e;
+      font-family: 'Gochi Hand', cursive;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ff6b08;
+    }
 
-        .container {
-            background: #1a1a1a;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #ff6b08;
-            text-align: center;
-            max-width: 90%;
-            width: 500px;
-            margin: 1rem;
-        }
+    .container {
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #ff6b08;
+      text-align: center;
+      max-width: 90%;
+      width: 500px;
+      margin: 1rem;
+    }
 
-        h1 {
-            font-family: 'Creepster', cursive;
-            color: #ff6b08;
-            margin-bottom: 1.5rem;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px #000;
-        }
+    h1 {
+      font-family: 'Creepster', cursive;
+      color: #ff6b08;
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px #000;
+    }
 
-        .input-group {
-            margin: 1.5rem 0;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    .input-group {
+      margin: 1.5rem 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-        /* Styling for inputs, select, and buttons */
-        input, select, button {
-            padding: 0.8rem;
-            border-radius: 5px;
-            border: 2px solid #ff6b08;
-            background: #2c0b0e;
-            color: #ff6b08;
-            font-family: inherit;
-            font-size: 1.1rem;
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
-        }
+    /* Styling for inputs, select, and buttons */
+    input, select, button {
+      padding: 0.8rem;
+      border-radius: 5px;
+      border: 2px solid #ff6b08;
+      background: #2c0b0e;
+      color: #ff6b08;
+      font-family: inherit;
+      font-size: 1.1rem;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
 
-        /* Enhanced focus effect */
-        input:focus, select:focus {
-            border-color: #ff6b08;
-            outline: none;
-            box-shadow: 0 0 5px rgba(255, 107, 8, 0.5);
-        }
+    /* Enhanced focus effect */
+    input:focus, select:focus {
+      border-color: #ff6b08;
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 107, 8, 0.5);
+    }
 
-        /* Remove spinner arrows from number input */
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
+    /* Remove spinner arrows from number input */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
 
-        /* Custom select styling: remove default arrow and add custom SVG */
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background: #2c0b0e url("data:image/svg+xml;utf8,<svg fill='%23ff6b08' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
-            background-size: 16px;
-        }
+    /* Custom select styling: remove default arrow and add custom SVG */
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: #2c0b0e url("data:image/svg+xml;utf8,<svg fill='%23ff6b08' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+      background-size: 16px;
+    }
 
-        button {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #ff6b08;
-            color: #1a1a1a;
-        }
+    button {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #ff6b08;
+      color: #1a1a1a;
+    }
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px #ff6b08;
-        }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ff6b08;
+    }
 
-        .loading-screen {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            padding: 1rem;
-        }
+    .loading-screen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem;
+    }
 
-        .pumpkin-loader {
-            width: 100px;
-            height: 100px;
-            position: relative;
-            animation: float 3s ease-in-out infinite;
-            font-size: 4rem;
-        }
+    .pumpkin-loader {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+      font-size: 4rem;
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
 
-        /* Progress bar styling */
-        .progress-container {
-            position: relative;
-            width: 80%;
-            height: 20px;
-            border: 2px solid #ff6b08;
-            background: #2c0b0e;
-            margin: 1rem auto;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+    /* Progress bar styling */
+    .progress-container {
+      position: relative;
+      width: 80%;
+      height: 20px;
+      border: 2px solid #ff6b08;
+      background: #2c0b0e;
+      margin: 1rem auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: #ff6b08;
-            transition: width 1s linear;
-        }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #ff6b08;
+      transition: width 1s linear;
+    }
 
-        .progress-death {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-        }
+    /* Death figure styling: moves along the progress bar */
+    .death-figure {
+      position: absolute;
+      top: -4px;
+      left: 0%;
+      font-size: 15px;
+      transition: left 1s linear;
+      color: #ff6b08 !important; /* Force the bright orange color */
+      text-shadow: 2px 2px 4px #000; /* Add shadow for extra contrast */
+}
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .input-group {
-                flex-direction: column;
-            }
-            
-            input, select, button {
-                width: 100%;
-            }
-        }
-    </style>
+    
+
+    /* Attack animation for death figure */
+    @keyframes attack {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+    .attack {
+      animation: attack 0.5s ease-in-out;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .input-group {
+        flex-direction: column;
+      }
+      
+      input, select, button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Spooky Countdown</h1>
-        <div class="input-group">
-            <input type="number" id="timeInput" placeholder="Enter time..." min="1">
-            <select id="timeUnit">
-                <option value="seconds">Seconds</option>
-                <option value="minutes">Minutes</option>
-                <option value="hours">Hours</option>
-                <option value="days">Days</option>
-                <option value="weeks">Weeks</option>
-            </select>
-        </div>
-        <button onclick="startCountdown()">Start Countdown</button>
+  <div class="container">
+    <h1>Spooky Countdown</h1>
+    <div class="input-group">
+      <input type="number" id="timeInput" placeholder="Enter time..." min="1">
+      <select id="timeUnit">
+        <option value="seconds">Seconds</option>
+        <option value="minutes">Minutes</option>
+        <option value="hours">Hours</option>
+        <option value="days">Days</option>
+        <option value="weeks">Weeks</option>
+      </select>
     </div>
+    <button onclick="startCountdown()">Start Countdown</button>
+  </div>
 
-    <div class="loading-screen" id="loadingScreen">
-        <div class="pumpkin-loader">🎃</div>
-        <h2 id="countdownDisplay"></h2>
-        <div class="progress-container">
-            <div class="progress-death">💀</div>
-            <div class="progress-bar"></div>
-        </div>
-        <button id="stopCountdownButton" onclick="stopCountdown()">Stop Countdown</button>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="pumpkin-loader">🎃</div>
+    <h2 id="countdownDisplay"></h2>
+    <div class="progress-container">
+      <div class="death-figure">💀⚔️</div>
+      <div class="progress-bar"></div>
     </div>
+    <button id="stopCountdownButton" onclick="stopCountdown()">Stop Countdown</button>
+  </div>
 
-    <script>
-        let countdownInterval; // Global variable for the countdown interval
-        let totalSeconds = 0;  // To store the initial total seconds for progress calculation
+  <script>
+    let countdownInterval; // Global variable for the countdown interval
+    let totalSeconds = 0;  // Store the initial total seconds for progress calculation
 
-        function startCountdown() {
-            const timeInput = document.getElementById('timeInput');
-            const timeUnit = document.getElementById('timeUnit').value;
-            const loadingScreen = document.getElementById('loadingScreen');
-            const countdownDisplay = document.getElementById('countdownDisplay');
-            const progressBar = document.querySelector('.progress-bar');
+    function startCountdown() {
+      const timeInput = document.getElementById('timeInput');
+      const timeUnit = document.getElementById('timeUnit').value;
+      const loadingScreen = document.getElementById('loadingScreen');
+      const countdownDisplay = document.getElementById('countdownDisplay');
+      const progressBar = document.querySelector('.progress-bar');
+      const deathFigure = document.querySelector('.death-figure');
 
-            if (!timeInput.value || timeInput.value <= 0) {
-                alert("Please enter a valid number!");
-                return;
-            }
+      if (!timeInput.value || timeInput.value <= 0) {
+        alert("Please enter a valid number!");
+        return;
+      }
 
-            let seconds = convertToSeconds(timeInput.value, timeUnit);
-            totalSeconds = seconds; // Save the initial time value
+      let seconds = convertToSeconds(timeInput.value, timeUnit);
+      totalSeconds = seconds; // Save the initial time value
 
-            loadingScreen.style.display = 'flex';
-            document.querySelector('.container').style.display = 'none';
+      loadingScreen.style.display = 'flex';
+      document.querySelector('.container').style.display = 'none';
 
-            countdownDisplay.textContent = formatTime(seconds);
-            progressBar.style.width = '0%';
+      countdownDisplay.textContent = formatTime(seconds);
+      progressBar.style.width = '0%';
+      deathFigure.style.left = '0%';
+      deathFigure.classList.remove('attack'); // Reset any previous animation
 
-            countdownInterval = setInterval(() => {
-                seconds--;
-                countdownDisplay.textContent = formatTime(seconds);
+      countdownInterval = setInterval(() => {
+        seconds--;
+        countdownDisplay.textContent = formatTime(seconds);
 
-                // Update the progress bar width based on elapsed time
-                let progressPercentage = ((totalSeconds - seconds) / totalSeconds) * 100;
-                progressBar.style.width = progressPercentage + '%';
+        // Calculate progress percentage
+        let progressPercentage = ((totalSeconds - seconds) / totalSeconds) * 100;
+        progressBar.style.width = progressPercentage + '%';
+        deathFigure.style.left = progressPercentage + '%';
 
-                if (seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    countdownDisplay.textContent = "TIME'S UP!";
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        document.querySelector('.container').style.display = 'block';
-                    }, 2000);
-                }
-            }, 1000);
-        }
-
-        function stopCountdown() {
-            clearInterval(countdownInterval);
-            // Reset UI elements
-            document.getElementById('loadingScreen').style.display = 'none';
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          // Trigger death figure attack animation
+          deathFigure.classList.add('attack');
+          countdownDisplay.textContent = "DEATH HAS CLAIMED YOU!";
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
             document.querySelector('.container').style.display = 'block';
-            document.querySelector('.progress-bar').style.width = '0%';
-            document.getElementById('countdownDisplay').textContent = '';
+            // Reset elements
+            progressBar.style.width = '0%';
+            deathFigure.style.left = '0%';
+            countdownDisplay.textContent = '';
+          }, 3000);
         }
+      }, 1000);
+    }
 
-        function convertToSeconds(value, unit) {
-            const conversions = {
-                seconds: 1,
-                minutes: 60,
-                hours: 3600,
-                days: 86400,
-                weeks: 604800
-            };
-            return value * conversions[unit];
-        }
+    function stopCountdown() {
+      clearInterval(countdownInterval);
+      // Reset UI elements
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.querySelector('.container').style.display = 'block';
+      document.querySelector('.progress-bar').style.width = '0%';
+      document.querySelector('.death-figure').style.left = '0%';
+      document.getElementById('countdownDisplay').textContent = '';
+    }
 
-        function formatTime(seconds) {
-            const days = Math.floor(seconds / 86400);
-            seconds %= 86400;
-            const hours = Math.floor(seconds / 3600);
-            seconds %= 3600;
-            const minutes = Math.floor(seconds / 60);
-            seconds %= 60;
-            
-            return [
-                days > 0 ? `${days}d` : '',
-                hours > 0 ? `${hours}h` : '',
-                minutes > 0 ? `${minutes}m` : '',
-                `${seconds}s`
-            ].filter(Boolean).join(' ');
-        }
-    </script>
+    function convertToSeconds(value, unit) {
+      const conversions = {
+        seconds: 1,
+        minutes: 60,
+        hours: 3600,
+        days: 86400,
+        weeks: 604800
+      };
+      return value * conversions[unit];
+    }
+
+    function formatTime(seconds) {
+      const days = Math.floor(seconds / 86400);
+      seconds %= 86400;
+      const hours = Math.floor(seconds / 3600);
+      seconds %= 3600;
+      const minutes = Math.floor(seconds / 60);
+      seconds %= 60;
+
+      return [
+        days > 0 ? `${days}d` : '',
+        hours > 0 ? `${hours}h` : '',
+        minutes > 0 ? `${minutes}m` : '',
+        `${seconds}s`
+      ].filter(Boolean).join(' ');
+    }
+  </script>
 </body>
 </html>
